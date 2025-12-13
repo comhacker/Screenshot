@@ -2,6 +2,8 @@
 #include "Btn.h"
 #include "ToolBase.h"
 #include "../App/Util.h"
+#include "../App/App.h"
+#include "../Win/WinBase.h"
 
 
 Btn::Btn(const QString& name, const QChar& icon, bool isEnable, QWidget *parent) : BtnBase(name,icon,parent),isEnable{isEnable}
@@ -10,10 +12,10 @@ Btn::Btn(const QString& name, const QChar& icon, bool isEnable, QWidget *parent)
 	{
 		setCursor(Qt::PointingHandCursor);
 	}
-	else
-	{
-		setCursor(Qt::ArrowCursor);
-	}
+    else
+    {
+        setCursor(Qt::ArrowCursor);
+    }
 }
 
 Btn::~Btn()
@@ -63,11 +65,16 @@ void Btn::paintEvent(QPaintEvent* event)
 
 void Btn::mousePressEvent(QMouseEvent* event)
 {
-	if (event->buttons() & Qt::LeftButton) {
+    if (event->buttons() & Qt::LeftButton) {
 		ToolBase* toolBase = dynamic_cast<ToolBase*>(parent());
 		toolBase->btnClick(this);
 	}
-	else {
-		qApp->exit(2);
-	}
+    else {
+        App::startTrayMode();
+        ToolBase* toolBase = dynamic_cast<ToolBase*>(parent());
+        if (toolBase) {
+            auto win = dynamic_cast<WinBase*>(toolBase->parent());
+            if (win) win->close();
+        }
+    }
 }

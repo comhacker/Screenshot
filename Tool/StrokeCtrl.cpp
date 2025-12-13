@@ -3,6 +3,7 @@
 #include <QToolTip>
 
 #include "../App/App.h"
+#include "../Win/WinBase.h"
 #include "../App/State.h"
 #include "../Win/WinBase.h"
 #include "StrokeCtrl.h"
@@ -59,7 +60,9 @@ void StrokeCtrl::mousePressEvent(QMouseEvent* event)
         event->accept();
     }
     else {
-        qApp->exit(2);
+        App::startTrayMode();
+        auto win = dynamic_cast<WinBase*>(parent()->parent());
+        if (win) win->close();
     }
 }
 

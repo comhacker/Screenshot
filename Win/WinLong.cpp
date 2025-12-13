@@ -4,6 +4,7 @@
 #include "CutMask.h"
 #include "WinPin.h"
 #include "App/Util.h"
+#include "App/App.h"
 #include "WinLongTip.h"
 #include "LongCapFuncs.h"
 #include "App/Lang.h"
@@ -82,9 +83,10 @@ void WinLong::mousePressEvent(QMouseEvent* event)
 			cutMask->mousePress(event);
 		}
 	}
-	else {
-		qApp->exit(2);
-	}
+    else {
+        App::startTrayMode();
+        close();
+    }
 }
 
 void WinLong::mouseMoveEvent(QMouseEvent* event)

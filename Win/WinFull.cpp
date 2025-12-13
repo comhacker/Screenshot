@@ -56,7 +56,8 @@ void WinFull::mousePressEvent(QMouseEvent* event)
         }
     }
     else {
-        qApp->exit(2);
+        App::startTrayMode();
+        close();
     }
 }
 

@@ -1,6 +1,8 @@
 #include <QDateTime>
 
 #include "Canvas.h"
+#include "App/App.h"
+#include "WinBase.h"
 #include "WinBase.h"
 #include "CutMask.h"
 #include "App/Util.h"
@@ -331,7 +333,9 @@ void Canvas::copyColor(const int& key)
         return;
     }
     Util::copyColor(key);
-    qApp->exit(4+key);
+    App::startTrayMode();
+    auto win = (WinBase*)parent();
+    if (win) win->close();
 }
 
 void Canvas::resize(const QSize& size)

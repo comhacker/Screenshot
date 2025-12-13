@@ -3,6 +3,8 @@
 #include "../App/Util.h"
 #include "ToolBase.h"
 #include "BtnCheck.h"
+#include "../App/App.h"
+#include "../Win/WinBase.h"
 
 BtnCheck::BtnCheck(const QString& name, const QChar& icon, QWidget* parent, State state, bool isChecked) : BtnBase(name, icon, parent),
 state{state}, isChecked{ isChecked }
@@ -58,6 +60,11 @@ void BtnCheck::mousePressEvent(QMouseEvent* event)
         toolBase->btnCheckChange(this);
     }
     else {
-        qApp->exit(2);
+        App::startTrayMode();
+        ToolBase* toolBase = dynamic_cast<ToolBase*>(parent());
+        if (toolBase) {
+            auto win = dynamic_cast<WinBase*>(toolBase->parent());
+            if (win) win->close();
+        }
     }
 }

@@ -14,6 +14,7 @@
 #include "Shape/ShapeBase.h"
 #include "App/Util.h"
 #include "App/Lang.h"
+#include "App/App.h"
 #include "Tool/ToolMain.h"
 #include "Tool/ToolSub.h"
 #include "WinPinBtns.h"
@@ -190,6 +191,6 @@ void WinPin::enterEvent(QEnterEvent* event)
 void WinPin::closeEvent(QCloseEvent* event)
 {
     deleteLater();
-    qApp->exit(1);
+    App::startTrayMode();
 }
 

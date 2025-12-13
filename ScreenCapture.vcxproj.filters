@@ -134,6 +134,15 @@
     <ClCompile Include="Tool\ToolLong.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="App\TrayIcon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\HotKeyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Win\WinSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App\App.h">
@@ -256,6 +265,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Tool\ToolLong.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="App\TrayIcon.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="App\HotKeyManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Win\WinSettings.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

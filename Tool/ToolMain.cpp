@@ -22,7 +22,7 @@ ToolMain::ToolMain(QWidget* parent) : ToolBase(parent)
     auto tools = App::getTool();
     if (tools.isEmpty()) {
         initDefaultTool(layout);
-        setFixedSize(14 * btnW + 8, 32);
+        setFixedSize(15 * btnW + 8, 32);
     }
     else {
         int btnCount{0};
@@ -165,9 +165,15 @@ void ToolMain::btnClick(Btn* btn)
         }
 	}
 	else if (btn->name == "close") {
-		win->close();
-        qApp->exit(1);
+        App::startTrayMode();
+        win->close();
 	}
+    else if (btn->name == "background") {
+        // 启动托盘与全局热键，并关闭当前截图窗口
+        App::startTrayMode();
+        auto w = qobject_cast<QWidget*>(parent());
+        if (w) w->close();
+    }
 }
 
 void ToolMain::paintEvent(QPaintEvent* event)
@@ -257,6 +263,11 @@ QWidget* ToolMain::getTool(const QString& toolName)
     else if (toolName == "close") {
         return new Btn("close", QChar(0xe6e7), this);
     }
+    else if (toolName == "background") {
+        auto b = new Btn("background", QChar(0xe6a3), this); // 图标占位
+        b->setToolTip(Lang::get("runInBackground"));
+        return b;
+    }
     return nullptr;
 }
 
@@ -275,5 +286,10 @@ void ToolMain::initDefaultTool(QHBoxLayout* layout)
     layout->addWidget(new Btn("pin", QChar(0xe6a3), this));
     layout->addWidget(new Btn("clipboard", QChar(0xe87f), this));
     layout->addWidget(new Btn("save", QChar(0xe6c0), this));
+    {
+        auto b = new Btn("background", QChar(0xe6a3), this);
+        b->setToolTip(Lang::get("runInBackground"));
+        layout->addWidget(b);
+    }
     layout->addWidget(new Btn("close", QChar(0xe6e7), this));
 }

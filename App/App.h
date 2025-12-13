@@ -11,6 +11,8 @@ public:
 	static std::tuple<int, int> getCompressVal();
 	static int getCustomCap();
 	static QStringList getTool();
+	static void startTrayMode();
+	static bool isTrayMode();
 public:
 private:
 	inline static QMap<QString, QString> getCmd();

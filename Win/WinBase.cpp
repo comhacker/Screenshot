@@ -6,6 +6,7 @@
 #include "WinBase.h"
 #include "WinPin.h"
 #include "App/Util.h"
+#include "App/App.h"
 #include "Canvas.h"
 
 WinBase::WinBase(QWidget* parent) : QMainWindow(parent)
@@ -19,8 +20,8 @@ void WinBase::saveToClipboard()
 {
     auto img = getTargetImg();
     Util::imgToClipboard(img);
+    App::startTrayMode();
     close();
-    qApp->exit(9);
 }
 
 void WinBase::saveToFile()
@@ -28,8 +29,8 @@ void WinBase::saveToFile()
     auto img = getTargetImg();
     auto flag = Util::saveToFile(img);
     if (flag) {
+        App::startTrayMode();
         close();
-        qApp->exit(8);
     }
 }
 
@@ -37,7 +38,8 @@ void WinBase::keyPressEvent(QKeyEvent* event)
 {
     auto key = event->key();
     if (key == Qt::Key_Escape) {
-        qApp->exit(3);
+        App::startTrayMode();
+        close();
     }
     else if (key == Qt::Key_Left) {
         moveCursor(QPoint(-1, 0));

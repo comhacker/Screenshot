@@ -56,9 +56,9 @@ void ToolLong::btnClick(Btn* btn)
         }
 	}
 	else if (btn->name == "close") {
+        App::startTrayMode();
         auto win = (WinBase*)parent();
         win->close();
-        qApp->exit(1);
 	}
 }
 
