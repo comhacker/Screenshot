@@ -2,11 +2,14 @@
 #include <windowsx.h>
 #include <dwmapi.h>
 
+#include <QMessageBox>
+
 #include "Shape/ShapeBase.h"
 #include "WinBase.h"
 #include "WinPin.h"
 #include "App/Util.h"
 #include "App/App.h"
+#include "../Modules/Ocr/OcrModule.h"
 #include "Canvas.h"
 
 WinBase::WinBase(QWidget* parent) : QMainWindow(parent)
@@ -32,6 +35,14 @@ void WinBase::saveToFile()
         App::startTrayMode();
         close();
     }
+}
+
+void WinBase::doOcr()
+{
+    const QString lang = "chi_sim+eng";
+
+    auto img = getTargetImg();
+    OcrModule::run(this, img, lang);
 }
 
 void WinBase::keyPressEvent(QKeyEvent* event)
@@ -74,6 +85,9 @@ void WinBase::keyPressEvent(QKeyEvent* event)
         }
         else if (key == Qt::Key_C) {
             saveToClipboard();
+        }
+        else if (key == Qt::Key_O) {
+            doOcr();
         }
         else if (key == Qt::Key_R) {
             canvas->copyColor(0);

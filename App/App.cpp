@@ -15,8 +15,7 @@
 #include "App.h"
 #include "Lang.h"
 #include "Util.h"
-#include "TrayIcon.h"
-#include "HotKeyManager.h"
+#include "../Modules/Integration/AppController.h"
 #include "Win/WinFull.h"
 #include "Win/WinPin.h"
 #include "Win/WinLong.h"
@@ -29,8 +28,6 @@ namespace {
     int compressQuality{ -1 };
 	int customCap{ -1 };
     QStringList tools;
-    TrayIcon* trayIcon = nullptr;
-    HotKeyManager* hotKeyManager = nullptr;
     bool trayMode = false;
 }
 QMap<QString, QString> App::getCmd()
@@ -381,41 +378,7 @@ void App::init()
     
     // 托盘模式
     if (trayMode) {
-        // 创建托盘图标
-        trayIcon = new TrayIcon();
-        
-        // 创建热键管理器
-        hotKeyManager = HotKeyManager::instance();
-        
-        // 加载并注册热键
-        QSettings settings("ScreenCapture", "Settings");
-        int hotKeyModifiers = settings.value("HotKey/Modifiers", MOD_CONTROL | MOD_ALT).toInt();
-        int hotKeyVirtualKey = settings.value("HotKey/VirtualKey", int('A')).toInt();
-        hotKeyManager->registerHotKey(1, hotKeyModifiers, hotKeyVirtualKey);
-        
-        // 连接信号
-        QObject::connect(hotKeyManager, &HotKeyManager::hotKeyPressed, [](int id) {
-            if (id == 1) {
-                // 触发截图
-                new WinFull();
-            }
-        });
-        
-        QObject::connect(trayIcon, &TrayIcon::captureRequested, []() {
-            new WinFull();
-        });
-        
-        QObject::connect(trayIcon, &TrayIcon::settingsRequested, []() {
-            WinSettings* settingsWin = new WinSettings();
-            QObject::connect(settingsWin, &WinSettings::hotKeyChanged, [](int modifiers, int virtualKey) {
-                // 更新热键
-                if (hotKeyManager) {
-                    hotKeyManager->registerHotKey(1, modifiers, virtualKey);
-                }
-            });
-            settingsWin->show();
-        });
-        
+        AppController::startTrayMode();
         return;
     }
     
@@ -425,89 +388,13 @@ void App::init()
 }
 void App::dispose()
 {
-    if (trayIcon) {
-        delete trayIcon;
-        trayIcon = nullptr;
-    }
-    if (hotKeyManager) {
-        hotKeyManager->unregisterAllHotKeys();
-    }
+    AppController::stop();
     app.reset();       
 }
 
 void App::startTrayMode()
 {
-    // 已在托盘运行直接返回
-    if (trayIcon != nullptr) return;
-
-    // 关闭最后一个窗口时不退出，以便托盘常驻
-    qApp->setQuitOnLastWindowClosed(false);
-
-    // 创建托盘图标
-    trayIcon = new TrayIcon();
-
-    // 创建热键管理器
-    hotKeyManager = HotKeyManager::instance();
-    hotKeyManager->show(); // 确保有原生窗口接收 WM_HOTKEY
-
-    // 加载并注册热键
-    QSettings settings("ScreenCapture", "Settings");
-    int hotKeyModifiers = settings.value("HotKey/Modifiers", MOD_CONTROL | MOD_ALT).toInt();
-    int hotKeyVirtualKey = settings.value("HotKey/VirtualKey", int('A')).toInt();
-    bool ok = hotKeyManager->registerHotKey(1, hotKeyModifiers, hotKeyVirtualKey);
-
-    // 连接信号：热键与托盘菜单均触发截图
-    QObject::connect(hotKeyManager, &HotKeyManager::hotKeyPressed, [](int id) {
-        if (id == 1) {
-            new WinFull();
-        }
-    });
-    QObject::connect(trayIcon, &TrayIcon::captureRequested, []() {
-        new WinFull();
-    });
-    QObject::connect(trayIcon, &TrayIcon::settingsRequested, []() {
-        WinSettings* settingsWin = new WinSettings();
-        QObject::connect(settingsWin, &WinSettings::hotKeyChanged, [](int modifiers, int virtualKey) {
-            if (hotKeyManager) {
-                hotKeyManager->registerHotKey(1, modifiers, virtualKey);
-            }
-        });
-        settingsWin->show();
-    });
-
-    // 提示用户注册结果
-    if (ok) {
-        QStringList parts;
-        if (hotKeyModifiers & MOD_CONTROL) parts << "Ctrl";
-        if (hotKeyModifiers & MOD_ALT) parts << "Alt";
-        if (hotKeyModifiers & MOD_SHIFT) parts << "Shift";
-        if (hotKeyModifiers & MOD_WIN) parts << "Win";
-        QString keyStr;
-        if (hotKeyVirtualKey >= 'A' && hotKeyVirtualKey <= 'Z') {
-            keyStr = QChar(hotKeyVirtualKey);
-        } else if (hotKeyVirtualKey >= VK_F1 && hotKeyVirtualKey <= VK_F24) {
-            keyStr = QString("F%1").arg(hotKeyVirtualKey - VK_F1 + 1);
-        } else if (hotKeyVirtualKey >= '0' && hotKeyVirtualKey <= '9') {
-            keyStr = QChar(hotKeyVirtualKey);
-        } else {
-            switch (hotKeyVirtualKey) {
-            case VK_SPACE: keyStr = "Space"; break;
-            case VK_TAB: keyStr = "Tab"; break;
-            case VK_RETURN: keyStr = "Enter"; break;
-            case VK_ESCAPE: keyStr = "Esc"; break;
-            case VK_LEFT: keyStr = "Left"; break;
-            case VK_RIGHT: keyStr = "Right"; break;
-            case VK_UP: keyStr = "Up"; break;
-            case VK_DOWN: keyStr = "Down"; break;
-            default: keyStr = QString("VK_%1").arg(hotKeyVirtualKey); break;
-            }
-        }
-        parts << keyStr;
-        QString combo = parts.join("+");
-        trayIcon->showMessage("ScreenCapture", Lang::get("hotkeyRegistered") + ": " + combo, QSystemTrayIcon::Information, 2000);
-    } else {
-        trayIcon->showMessage("ScreenCapture", Lang::get("hotkeyFailed"), QSystemTrayIcon::Warning, 3000);
-    }
+    AppController::startTrayMode();
 }
 
 QString App::getSavePath()

@@ -124,9 +124,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App\App.cpp" />
-    <ClCompile Include="App\HotKeyManager.cpp" />
     <ClCompile Include="App\Lang.cpp" />
-    <ClCompile Include="App\TrayIcon.cpp" />
+    <ClCompile Include="Modules\Hotkey\HotKeyManager.cpp" />
+    <ClCompile Include="Modules\Hotkey\HotkeyModule.cpp" />
+    <ClCompile Include="Modules\Integration\AppController.cpp" />
+    <ClCompile Include="Modules\Ocr\OcrModule.cpp" />
+    <ClCompile Include="Modules\Ocr\OcrResultDialog.cpp" />
+    <ClCompile Include="Modules\Ocr\OcrService.cpp" />
+    <ClCompile Include="Modules\Tray\TrayIcon.cpp" />
+    <ClCompile Include="Modules\Tray\TrayModule.cpp" />
     <ClCompile Include="Shape\ShapeArrow.cpp" />
     <ClCompile Include="Shape\ShapeBase.cpp" />
     <ClCompile Include="Shape\ShapeEllipse.cpp" />
@@ -166,8 +172,14 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Win\WinSettings.h" />
-    <QtMoc Include="App\TrayIcon.h" />
-    <QtMoc Include="App\HotKeyManager.h" />
+    <QtMoc Include="Modules\Tray\TrayIcon.h" />
+    <QtMoc Include="Modules\Hotkey\HotKeyManager.h" />
+    <ClInclude Include="Modules\Hotkey\HotkeyModule.h" />
+    <ClInclude Include="Modules\Integration\AppController.h" />
+    <ClInclude Include="Modules\Ocr\OcrModule.h" />
+    <ClInclude Include="Modules\Ocr\OcrResultDialog.h" />
+    <ClInclude Include="Modules\Ocr\OcrService.h" />
+    <ClInclude Include="Modules\Tray\TrayModule.h" />
     <ClInclude Include="Win\LongCapFuncs.h" />
     <QtMoc Include="Tool\ToolLong.h" />
     <QtMoc Include="Win\WinLongTip.h" />

@@ -17,6 +17,7 @@ public:
 	~WinBase();
 	void saveToClipboard();
 	void saveToFile();
+	void doOcr();
 	void keyPressEvent(QKeyEvent* event) override;
 public:
 	int x, y, w, h;

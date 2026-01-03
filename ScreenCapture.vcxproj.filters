@@ -134,10 +134,28 @@
     <ClCompile Include="Tool\ToolLong.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="App\TrayIcon.cpp">
+    <ClCompile Include="Modules\Tray\TrayIcon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="App\HotKeyManager.cpp">
+    <ClCompile Include="Modules\Hotkey\HotKeyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Hotkey\HotkeyModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Integration\AppController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Ocr\OcrModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Ocr\OcrResultDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Ocr\OcrService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Tray\TrayModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Win\WinSettings.cpp">
@@ -164,6 +182,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Win\LongCapFuncs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Ocr\OcrModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Ocr\OcrResultDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Ocr\OcrService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Hotkey\HotkeyModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Integration\AppController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Tray\TrayModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Tray\TrayIcon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Hotkey\HotKeyManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -267,10 +309,10 @@
     <QtMoc Include="Tool\ToolLong.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="App\TrayIcon.h">
+    <QtMoc Include="Modules\Tray\TrayIcon.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="App\HotKeyManager.h">
+    <QtMoc Include="Modules\Hotkey\HotKeyManager.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Win\WinSettings.h">

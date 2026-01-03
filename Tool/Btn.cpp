@@ -1,4 +1,5 @@
 #include <QPainter>
+#include <QFont>
 #include "Btn.h"
 #include "ToolBase.h"
 #include "../App/Util.h"
@@ -60,7 +61,18 @@ void Btn::paintEvent(QPaintEvent* event)
 		p.setPen(QColor(180, 180, 180));
 	}
     p.setBrush(Qt::NoBrush);
-    p.drawText(r, Qt::AlignCenter, icon);
+	if (name == "ocr") {
+		QFont tf;
+		tf.setFamily("Segoe UI");
+		tf.setBold(true);
+		tf.setPixelSize(11);
+		p.setFont(tf);
+		p.drawText(r, Qt::AlignCenter, "OCR");
+	}
+	else {
+		p.setFont(*font);
+		p.drawText(r, Qt::AlignCenter, icon);
+	}
 }
 
 void Btn::mousePressEvent(QMouseEvent* event)

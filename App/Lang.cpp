@@ -42,6 +42,7 @@ void Lang::initZhCn()
 	dic.insert("text", "文本");
 	dic.insert("mosaic", "马赛克");
 	dic.insert("eraser", "橡皮擦");
+	dic.insert("ocr", "文字识别");
 	dic.insert("undo", "撤销");
 	dic.insert("redo", "重做");
 	dic.insert("pin", "钉住");
@@ -109,6 +110,7 @@ void Lang::initEn()
 	dic.insert("text", "Text");
 	dic.insert("mosaic", "Mosaic");
 	dic.insert("eraser", "Eraser");
+	dic.insert("ocr", "OCR");
 	dic.insert("undo", "Undo");
 	dic.insert("redo", "Redo");
 	dic.insert("pin", "Pin");
